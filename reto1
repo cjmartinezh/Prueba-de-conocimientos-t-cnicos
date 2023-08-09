@@ -2,25 +2,33 @@ import csv
 import requests
 import json
 #lista de IP's
-filename = open('D:\Prueba tecnica\Prueba de capacidades técnicas - Listado de participantes - reto No. 1.csv', 'r')
+filename = open('D:\Prueba Tecnica\Prueba de capacidades técnicas - Listado de participantes - reto No. 1.csv', 'r')
 
 file = csv.DictReader(filename)
-ipaddress = ()
+ipaddress = []
 
 for col in file:
     ipaddress.append (col['GDPR IP'])
 
-print('GDPR IP', ipaddress)
 
+print(ipaddress)
+
+x = len(ipaddress)
+print(x)
 #lista de paises con IP
-x = 0
-for x in ipaddress:
+e = 0
+paises = []
+while e <= x:
     
-    request_url = 'https://geolocation-db.com/jsonp/'
+    request_url = 'https://geolocation-db.com/jsonp/' +ipaddress[e]
     response = requests.get(request_url)
     result = response.content.decode()
     result = result.split("(")[1].strip(")")
     result  = json.loads(result)
+    paises.append(result['country_name'])
+    e = e+1
+    print(result['country_name'])
 
-print(result['country_name'])
+
+
 
